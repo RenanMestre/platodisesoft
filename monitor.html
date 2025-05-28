@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoramento - Platodiesel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .monitor-container {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 36px 32px 28px 32px;
+            min-width: 340px;
+            max-width: 95vw;
+            width: 400px;
+        }
+        .monitor-container h1 {
+            color: #1976d2;
+            font-size: 1.7rem;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .status-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px 0;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f4f7fa;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+        }
+        .status-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #222;
+        }
+        .status-value {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        .status-ok {
+            color: #00e676;
+        }
+        .status-alert {
+            color: #ff5252;
+        }
+        .checklist {
+            margin-top: 28px;
+            background: #f4f7fa;
+            border-radius: 14px;
+            padding: 18px 14px;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+        }
+        .checklist-title {
+            color: #1976d2;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .checklist-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 7px;
+            color: #222;
+            font-size: 1.02rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 6px;
+            padding: 4px 2px;
+        }
+        .checklist-item:last-child {
+            margin-bottom: 0;
+        }
+        .check-icon {
+            font-size: 1.2rem;
+            color: #bbb;
+            transition: color 0.2s;
+        }
+        .checked .check-icon {
+            color: #00e676;
+        }
+        .checked {
+            background: #e3fbe8;
+        }
+        @media (max-width: 500px) {
+            .monitor-container {
+                padding: 12px 2vw 12px 2vw;
+                min-width: unset;
+                width: 98vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="monitor-container">
+        <h1><i class="fas fa-industry"></i> Monitoramento da Máquina</h1>
+        <ul class="status-list">
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-tachometer-alt"></i> Nível de Pressão do Ar</span>
+                <span class="status-value">55 psi</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-cube"></i> Detecção de Peça</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Detectada</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-bolt"></i> Acionamento da Máquina</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Ativado</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-cogs"></i> Funcionamento</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Operando</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-boxes"></i> Produtos Concluídos</span>
+                <span class="status-value">300</span>
+            </li>
+        </ul>
+        <div class="checklist">
+            <div class="checklist-title"><i class="fas fa-clipboard-check"></i> Checklist do procedimento</div>
+            <ul class="checklist-list" id="checklist">
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Confirmar as EPIs</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Regular a pressão do ar</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Encaixar o platô na plataforma giratória</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Pressionais o platô para preender as laterais</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Preender os parafusos que seguram o platô na plataforma</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Prender as brocas das laterais</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Soltar os parafusos do centro da peça</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Colocar o relógio medidor e ir regulando conforme a necessidade</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Colocar o papel da empresa entre um parafuso e o platô e apertar o parafuso</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Tirar a pressão peso gerado pela máquina de cima do platô</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Passar o lubrificante em pontos de brocas ou parafusos</li>
+                <li class="checklist-item"><i class="far fa-square check-icon"></i> Retirar e peça da plataforma</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Torna o checklist interativo
+        document.querySelectorAll('.checklist-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const icon = this.querySelector('.check-icon');
+                if(this.classList.contains('checked')) {
+                    icon.classList.remove('far', 'fa-square');
+                    icon.classList.add('fas', 'fa-check-square');
+                } else {
+                    icon.classList.remove('fas', 'fa-check-square');
+                    icon.classList.add('far', 'fa-square');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
