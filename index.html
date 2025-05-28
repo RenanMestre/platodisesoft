@@ -2,178 +2,101 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Platodiesel</title>
+    <title>Bem-vindo ao sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
-            background: #f4f4f4;
-            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #851919 0%, #272323 100%);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
-        .menu-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hamburger {
-            width: 60px;
-            height: 60px;
-            background: #222;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            transition: background 0.3s;
-            z-index: 2;
+        .explore-btn {
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .hamburger:hover {
-            background: #444;
-        }
-        .hamburger span, .hamburger span::before, .hamburger span::after {
-            display: block;
+            top: 32px;
+            right: 48px;
             background: #fff;
-            height: 4px;
-            width: 32px;
-            border-radius: 2px;
-            position: absolute;
-            transition: 0.3s;
+            color: #1976d2;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            transition: background 0.2s, color 0.2s;
+            z-index: 20;
         }
-        .hamburger span {
-            position: relative;
-        }
-        .hamburger span::before, .hamburger span::after {
-            content: '';
-            position: absolute;
-            left: 0;
-        }
-        .hamburger span::before {
-            top: -10px;
-        }
-        .hamburger span::after {
-            top: 10px;
-        }
-        .menu-container.active .hamburger span {
-            background: transparent;
-        }
-        .menu-container.active .hamburger span::before {
-            top: 0;
-            transform: rotate(45deg);
-        }
-        .menu-container.active .hamburger span::after {
-            top: 0;
-            transform: rotate(-45deg);
-        }
-        .menu-buttons {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            pointer-events: none;
-        }
-        .menu-button {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 56px;
-            height: 56px;
-            margin: -28px;
+        .explore-btn:hover {
             background: #1976d2;
             color: #fff;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.7);
-            transition: opacity 0.3s, transform 0.3s;
-            pointer-events: auto;
         }
-        /* Distribuição radial dos botões */
-        .menu-container.active .menu-button {
-            opacity: 1;
-            pointer-events: auto;
+        .intro-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 48px 32px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            position: relative;
         }
-        .menu-container.active .menu-button:nth-child(1) {
-            /* Página Principal - topo */
-            transform: translate(0%, -50%) scale(1) translate(0, -90px);
-            transition-delay: 0.05s;
+        .intro-logo {
+            width: 120px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 2px 8px rgba(25, 118, 210, 0.25));
         }
-        .menu-container.active .menu-button:nth-child(2) {
-            /* Monitoramento - direita */
-            transform: translate(50%, 0%) scale(1) translate(90px, 0);
-            transition-delay: 0.10s;
+        .intro-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
         }
-        .menu-container.active .menu-button:nth-child(3) {
-            /* Máquina - baixo */
-            transform: translate(0%, 50%) scale(1) translate(0, 90px);
-            transition-delay: 0.15s;
+        .intro-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 32px;
+            color: #e3e3e3;
         }
-        .menu-container.active .menu-button:nth-child(4) {
-            /* Relatório - esquerda */
-            transform: translate(-50%, 0%) scale(1) translate(-90px, 0);
-            transition-delay: 0.20s;
+        .intro-highlight {
+            color: #ff0000;
+            font-weight: bold;
         }
-        .menu-button i {
-            pointer-events: none;
-        }
-        .menu-button:hover {
-            background: #1251a3;
+        @media (max-width: 600px) {
+            .intro-container {
+                padding: 24px 8px;
+                border-radius: 16px;
+            }
+            .explore-btn {
+                top: 16px;
+                right: 16px;
+                padding: 10px 18px;
+                font-size: 1rem;
+            }
+            .intro-title {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="menu-container" id="menuContainer">
-        <div class="hamburger" id="hamburgerBtn">
-            <span></span>
+    <button class="explore-btn" onclick="window.location.href='opcoes.html'">
+        Explore mais <i class="fas fa-arrow-right"></i>
+    </button>
+    <div class="intro-container">
+        <img src="static/logo.png" alt="Logo da Empresa" class="intro-logo" />
+        <div class="intro-title">
+            Bem-vindo a <span class="intro-highlight">Platodiesel</span>
         </div>
-        <div class="menu-buttons">
-            <button class="menu-button" onclick="window.location.href='menu.html'" title="Página Principal">
-                <i class="fas fa-home"></i>
-            </button>
-            <button class="menu-button" onclick="window.location.href='monitoramento.html'" title="Monitoramento">
-                <i class="fas fa-chart-line"></i>
-            </button>
-            <button class="menu-button" onclick="window.location.href='maquina.html'" title="Tela de Máquina">
-                <i class="fas fa-gears"></i>
-            </button>
-            <button class="menu-button" onclick="window.location.href='relatorio.html'" title="Gerar Relatório">
-                <i class="fas fa-file-alt"></i>
-            </button>
+        <div class="intro-subtitle">
+            Empresa número 1 em <span class="intro-highlight">embreagens</span> e <span class="intro-highlight">sistemas ergonomicos</span> visando treinamento e acompanhamento na prática.<br>
+            Venha para a empresa estagiar ou atuar em uma área específica, aqui você aprende fazendo!
         </div>
     </div>
-    <script>
-        const menuContainer = document.getElementById('menuContainer');
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        hamburgerBtn.addEventListener('click', () => {
-            menuContainer.classList.toggle('active');
-        });
-        // Fecha o menu ao clicar fora
-        document.addEventListener('click', (e) => {
-            if (!menuContainer.contains(e.target)) {
-                menuContainer.classList.remove('active');
-            }
-        });
-    </script>
 </body>
 </html>
