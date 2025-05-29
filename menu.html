@@ -1,134 +1,65 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Menu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #492222 0%, #414345 100%);
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .menu-monitoramento {
-            background: #ffffff8f;
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 40px 32px 32px 32px;
-            min-width: 340px;
-            max-width: 95vw;
-            text-align: center;
-            position: relative;
-        }
-        .bem-vindo {
-            color: #d21919;
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .curiosidade {
-            color: #444;
-            font-size: 1.05rem;
-            margin-bottom: 24px;
-            margin-top: 0;
-        }
-        .menu-monitoramento h1 {
-            color: #d21919;
-            font-size: 2rem;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-        .menu-monitoramento p {
-            color: #444;
-            margin-bottom: 32px;
-            font-size: 1.1rem;
-        }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 120px);
-            gap: 28px;
-            justify-content: center;
-        }
-        .menu-card {
-            background: #f4f7fa;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
-            padding: 24px 0 16px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            border: none;
-            outline: none;
-        }
-        .menu-card:hover {
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 6px 18px rgba(25, 118, 210, 0.18);
-            background: #e3f0fc;
-        }
-        .menu-card i {
-            font-size: 2.6rem;
-            color: #1976d2;
-            margin-bottom: 12px;
-        }
-        .menu-card span {
-            font-size: 1.08rem;
-            color: #222;
-            font-weight: 500;
-        }
-        @media (max-width: 500px) {
-            .menu-monitoramento {
-                padding: 18px 4vw 18px 4vw;
-                min-width: unset;
-            }
-            .menu-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="static/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="menu-monitoramento">
-        <div class="bem-vindo">
-            <i class="fas fa-handshake"></i>
-            Bem-vindo à Platodiesel!
-        </div>
-        <p class="curiosidade">
-            Descubra o novo sistema de monitoramento inteligente, desenvolvido especialmente para otimizar o desempenho e a gestão das máquinas da sua empresa. Explore as funcionalidades e surpreenda-se com a tecnologia!
-        </p>
-        <h1><i class="fas fa-gears"></i> Monitoramento de Máquinas</h1>
-        <p>Escolha uma das opções para acompanhar o desempenho e o status das máquinas da empresa.</p>
-        <div class="menu-grid">
-            <button class="menu-card" onclick="window.location.href='monitoramento.html'">
-                <i class="fas fa-chart-line"></i>
-                <span>Visão Geral</span>
-            </button>
-            <button class="menu-card" onclick="window.location.href='monitor.html'">
-                <i class="fas fa-industry"></i>
-                <span>Monitor</span>
-            </button>
-            <button class="menu-card" onclick="window.location.href='relatorio.html'">
-                <i class="fas fa-file-alt"></i>
-                <span>Relatórios</span>
-            </button>
-            <button class="menu-card" onclick="window.location.href='primeira_vez.html'">
-                <i class="fas fa-bell"></i>
-                <span>Passo a passo</span>
-            </button>
-        </div>
-    </div>
+  <header>
+    <button id="menu-toggle" class="menu-toggle">&#9776;</button> <!-- Botão de menu -->
+    <img src="static/logo.png" alt="Logo da empresa">
+    <nav id="navbar" class="hidden">
+      <ul>
+        <li><a href="#">Se gostou da ideia compre!</a></li>       
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Cards -->
+    <section class="status-cards">
+      <div class="card green">
+        <h3>Máquinas operando</h3>
+        <p>25</p>
+      </div>
+      <div class="card yellow">
+        <h3>Máquinas com alerta</h3>
+        <p>5</p>
+      </div>
+      <div class="card red">
+        <h3>Máquinas com falha</h3>
+        <p>2</p>
+      </div>
+      <div class="card">
+        <h3>Próxima manutenção</h3>
+        <p>20/08/2025</p>
+      </div>
+      <div class="card eco-card">
+        <h3>🌱 Econômia circular</h3>
+        <p>A utilização de papéis será minimizada com esse sistema, dessa forma a empresa estará apoiando na eco natureza</p>
+      </div>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="charts">
+      <div class="chart-container">
+        <h3>Estado Geral das Máquinas</h3>
+        <canvas id="statusChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Temperaturas registradas</h3>
+        <canvas id="tempChart"></canvas>
+      </div>
+    </section>
+
+  <footer style="background-color: #121212; color: #bbb; padding: 20px; text-align: center; font-size: 14px;">
+    <p>&copy; 2025 Platodiesel. Todos os direitos reservados.</p>
+    <p>Comprometidos com a inovação, a segurança e a econômia circular.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
