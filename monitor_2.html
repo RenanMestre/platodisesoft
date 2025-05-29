@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Monitor</title>
+    <title>Monitor com sensor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -108,46 +108,11 @@
         .checked {
             background: #e3fbe8;
         }
-        .monitor-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 32px auto 0 auto;
-            padding: 14px 32px;
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            border-radius: 24px;
-            font-size: 1.13rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(25,118,210,0.10);
-            transition: background 0.2s, color 0.2s;
-        }
-        .monitor-btn:hover {
-            background: #1251a3;
-        }
-        .monitor-btn-footer {
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            position: fixed;
-            left: 0;
-            bottom: 24px;
-            z-index: 100;
-            pointer-events: none;
-        }
-        .monitor-btn-footer .monitor-btn {
-            pointer-events: all;
-        }
         @media (max-width: 500px) {
             .monitor-container {
                 padding: 12px 2vw 12px 2vw;
                 min-width: unset;
                 width: 98vw;
-            }
-            .monitor-btn-footer {
-                bottom: 10px;
             }
             #btnDownloadChecklist {
                 top: 1px !important;
@@ -161,10 +126,26 @@
 <body>
     <div class="monitor-container">
         <button id="btnDownloadChecklist" style="position:absolute;top:24px;right:32px;background:#1976d2;color:#fff;border:none;border-radius:18px;padding:8px 18px;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(25,118,210,0.10);">
-            <i class="fas fa-file-download"></i> Baixar PDF do checklist
+            <i class="fas fa-file-download"></i> Baixar checklist em PDF
         </button>
-        <h1><i class="fas fa-industry"></i>Tablet da máquina</h1>
+        <h1><i class="fas fa-industry"></i> Monitoramento da Máquina</h1>
         <ul class="status-list">
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-tachometer-alt"></i> Nível de Pressão do Ar</span>
+                <span class="status-value">55 psi</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-cube"></i> Detecção de Peça</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Detectada</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-bolt"></i> Acionamento da Máquina</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Ativado</span>
+            </li>
+            <li class="status-item">
+                <span class="status-label"><i class="fas fa-cogs"></i> Funcionamento</span>
+                <span class="status-value status-ok"><i class="fas fa-check-circle"></i> Operando</span>
+            </li>
             <li class="status-item">
                 <span class="status-label"><i class="fas fa-boxes"></i> Produtos Concluídos</span>
                 <span class="status-value">300</span>
@@ -188,12 +169,6 @@
             </ul>
         </div>
     </div>
-    <!-- Botão fora da monitor-container -->
-    <div class="monitor-btn-footer">
-        <button class="monitor-btn" onclick="window.location.href='monitor_2.html'">
-            <i class="fas fa-eye"></i> Ver com monitoramento sugerido
-        </button>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         // Torna o checklist interativo
@@ -210,6 +185,7 @@
                 }
             });
         });
+
         // Gera PDF do checklist
         document.getElementById('btnDownloadChecklist').addEventListener('click', function() {
             const { jsPDF } = window.jspdf;
