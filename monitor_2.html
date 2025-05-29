@@ -108,6 +108,34 @@
         .checked {
             background: #e3fbe8;
         }
+        .monitor-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            padding: 14px 32px;
+            font-size: 1.13rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(25,118,210,0.10);
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 16px;
+            text-decoration: none !important;
+            outline: none;
+        }
+        .monitor-btn:hover, .monitor-btn:focus {
+            background: #1251a3;
+            color: #fff;
+            transform: translateY(-2px) scale(1.03);
+            text-decoration: none;
+        }
+        .monitor-btn i {
+            font-size: 1.1em;
+        }
         @media (max-width: 500px) {
             .monitor-container {
                 padding: 12px 2vw 12px 2vw;
@@ -125,9 +153,6 @@
 </head>
 <body>
     <div class="monitor-container">
-        <button id="btnDownloadChecklist" style="position:absolute;top:24px;right:32px;background:#1976d2;color:#fff;border:none;border-radius:18px;padding:8px 18px;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(25,118,210,0.10);">
-            <i class="fas fa-file-download"></i> Baixar checklist em PDF
-        </button>
         <h1><i class="fas fa-industry"></i> Monitoramento da Máquina</h1>
         <ul class="status-list">
             <li class="status-item">
@@ -168,6 +193,15 @@
                 <li class="checklist-item"><i class="far fa-square check-icon"></i>12° Retirar e peça da plataforma</li>
             </ul>
         </div>
+        <!--<a href="passos.html" class="monitor-btn" style="margin-top:24px;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-list-ol"></i> Passo a passo
+        </a>-->
+        <a href="seguranca.html" class="monitor-btn">
+            <i class="fas fa-check-square"></i> Procedimentos de segurança
+        </a>
+        <button id="btnDownloadChecklist" class="monitor-btn">
+            <i class="fas fa-file-download"></i> Baixar PDF do Checklist
+        </button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
