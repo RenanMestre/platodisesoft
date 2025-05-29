@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Procedimentos de Segurança</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1976d2 0%, #414345 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 36px 28px 28px 28px;
+            max-width: 480px;
+            width: 95vw;
+        }
+        h1 {
+            color: #1976d2;
+            font-size: 2rem;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .safety-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 18px 0;
+        }
+        .safety-item {
+            background: #e3fbe8;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            padding: 14px 16px;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .safety-item i {
+            color: #1976d2;
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+        .highlight {
+            color: #d21919;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 4vw 18px 4vw;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-shield-alt"></i> Procedimentos de Segurança</h1>
+        <ul class="safety-list">
+            <li class="safety-item">
+                <i class="fas fa-hard-hat"></i>
+                <span><span class="highlight">Use sempre os EPIs:</span> óculos, luvas, protetor auricular e demais equipamentos obrigatórios.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-search"></i>
+                <span><span class="highlight">Inspecione a máquina</span> antes de operar. Verifique vazamentos, conexões e condições gerais.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-ban"></i>
+                <span><span class="highlight">Nunca direcione ar comprimido</span> para si ou para outras pessoas.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-broom"></i>
+                <span><span class="highlight">Mantenha o ambiente limpo</span> e organizado para evitar acidentes.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-lock"></i>
+                <span><span class="highlight">Siga procedimentos de bloqueio</span> e etiquetagem antes de qualquer manutenção.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span><span class="highlight">Participe de treinamentos</span> e mantenha-se atualizado sobre normas de segurança.</span>
+            </li>
+            <li class="safety-item">
+                <i class="fas fa-question-circle"></i>
+                <span><span class="highlight">Em caso de dúvida,</span> consulte o supervisor ou o manual técnico.</span>
+            </li>
+        </ul>
+        <div style="text-align:center;">
+            <a href="monitor.html" class="monitor-btn" style="background:#1976d2;color:#fff;padding:12px 28px;border-radius:22px;text-decoration:none;font-weight:bold;box-shadow:0 4px 16px rgba(25,118,210,0.10);display:inline-block;margin-top:10px;">
+                <i class="fas fa-arrow-left"></i> Voltar ao Monitor
+            </a>
+        </div>
+    </div>
+</body>
+</html>

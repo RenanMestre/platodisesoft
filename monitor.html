@@ -140,6 +140,12 @@
         .monitor-btn-footer .monitor-btn {
             pointer-events: all;
         }
+        a {
+            text-decoration: none;
+        }
+        a .monitor-btn, .monitor-btn {
+            text-decoration: none !important;
+        }
         @media (max-width: 500px) {
             .monitor-container {
                 padding: 12px 2vw 12px 2vw;
@@ -160,9 +166,6 @@
 </head>
 <body>
     <div class="monitor-container">
-        <button id="btnDownloadChecklist" style="position:absolute;top:24px;right:32px;background:#1976d2;color:#fff;border:none;border-radius:18px;padding:8px 18px;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(25,118,210,0.10);">
-            <i class="fas fa-file-download"></i> Baixar PDF do checklist
-        </button>
         <h1><i class="fas fa-industry"></i>Tablet da máquina</h1>
         <ul class="status-list">
             <li class="status-item">
@@ -187,12 +190,21 @@
                 <li class="checklist-item"><i class="far fa-square check-icon"></i>12° Retirar e peça da plataforma</li>
             </ul>
         </div>
+        <!--<a href="passos.html" class="monitor-btn" style="margin-top:24px;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-list-ol"></i> Passo a passo
+        </a>-->
+        <a href="seguranca.html" class="monitor-btn" style="margin-top:24px;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-check-square"></i> Procedimentos de segurança
+        </a>
+        <a href="monitor_2.html" class="monitor-btn" style="margin-top:16px;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-eye"></i> Ver com monitoramento sugerido
+        </a>
+        <button id="btnDownloadChecklist" class="monitor-btn" style="margin-top:16px;">
+            <i class="fas fa-file-download"></i> Baixar PDF do Checklist
+        </button>
     </div>
     <!-- Botão fora da monitor-container -->
     <div class="monitor-btn-footer">
-        <button class="monitor-btn" onclick="window.location.href='monitor_2.html'">
-            <i class="fas fa-eye"></i> Ver com monitoramento sugerido
-        </button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
