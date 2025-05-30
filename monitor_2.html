@@ -136,17 +136,150 @@
         .monitor-btn i {
             font-size: 1.1em;
         }
-        @media (max-width: 500px) {
-            .monitor-container {
-                padding: 12px 2vw 12px 2vw;
-                min-width: unset;
-                width: 98vw;
+        .main-flex {
+            display: flex;
+            gap: 24px;
+            margin-top: 28px;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+        .monitor-img-alerta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 180px;
+            max-width: 220px;
+            flex: 1;
+        }
+        .monitor-img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .monitor-img {
+            max-width: 100%;
+            max-height: 160px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(25,118,210,0.13);
+            background: #fff;
+            object-fit: contain;
+            border: 2px solid #1976d2;
+        }
+        .alerta-dados {
+            margin-top: 18px;
+            background: #fff3e0;
+            border-left: 5px solid #d21919;
+            border-radius: 10px;
+            padding: 14px 12px;
+            color: #851919;
+            font-size: 1.02rem;
+            box-shadow: 0 2px 8px rgba(210, 25, 25, 0.07);
+            width: 100%;
+            max-width: 220px;
+        }
+        .alerta-titulo {
+            font-weight: bold;
+            color: #d21919;
+            margin-bottom: 6px;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .alerta-msg {
+            margin-bottom: 8px;
+            color: #b85c00;
+        }
+        .alerta-status-critico {
+            color: #d21919;
+            font-weight: bold;
+            font-size: 0.98rem;
+        }
+        .status-top {
+            align-items: center;
+            gap: 10px;
+        }
+        .status-top .regulador {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #e3fbe8;
+            color: #1976d2;
+            font-size: 0.98rem;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 6px 12px;
+            margin-left: 18px;
+        }
+        .regulador-circular {
+            position: relative;
+            width: 54px;
+            height: 54px;
+            margin-left: 18px;
+            background: conic-gradient(#1976d2 0% 60%, #e0e0e0 60% 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(25,118,210,0.13);
+            border: 2px solid #1976d2;
+            cursor: pointer;
+            user-select: none;
+        }
+        .regulador-knob {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border: 3px solid #1976d2;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -90%) rotate(0deg);
+            box-shadow: 0 2px 6px rgba(25,118,210,0.13);
+            transition: background 0.2s;
+            cursor: grab;
+            z-index: 2;
+        }
+        .regulador-circular:active .regulador-knob {
+            background: #e3fbe8;
+        }
+        @media (max-width: 900px) {
+            .main-flex {
+                flex-direction: column;
+                gap: 0;
             }
-            #btnDownloadChecklist {
-                top: 1px !important;
-                right: 8px !important;
-                padding: 8px 10px !important;
-                font-size: 0.95rem !important;
+            .monitor-img-alerta {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                max-width: 100%;
+                margin-top: 18px;
+            }
+            .alerta-dados {
+                margin-top: 0;
+                margin-left: 18px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-flex {
+                flex-direction: column;
+                gap: 0;
+            }
+            .monitor-img-alerta {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 12px;
+            }
+            .alerta-dados {
+                margin-left: 0;
+                margin-top: 12px;
+                max-width: 98vw;
+            }
+            .monitor-img {
+                max-width: 98vw;
+                max-height: 120px;
             }
         }
     </style>
@@ -155,9 +288,14 @@
     <div class="monitor-container">
         <h1><i class="fas fa-industry"></i> Monitoramento da Máquina</h1>
         <ul class="status-list">
-            <li class="status-item">
-                <span class="status-label"><i class="fas fa-tachometer-alt"></i> Nível de Pressão do Ar</span>
-                <span class="status-value">55 psi</span>
+            <li class="status-item status-top">
+                <span class="status-label">
+                    <i class="fas fa-tachometer-alt"></i> Nível de Pressão do Ar
+                </span>
+                <span class="status-value" id="psiValue">55 psi</span>
+                <div class="regulador-circular" id="reguladorCircular">
+                    <div class="regulador-knob" id="reguladorKnob"></div>
+                </div>
             </li>
             <li class="status-item">
                 <span class="status-label"><i class="fas fa-cube"></i> Detecção de Peça</span>
@@ -176,26 +314,40 @@
                 <span class="status-value">300</span>
             </li>
         </ul>
-        <div class="checklist">
-            <div class="checklist-title"><i class="fas fa-clipboard-check"></i> Checklist do procedimento</div>
-            <ul class="checklist-list" id="checklist">
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>1° Confirmar as EPIs</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>2° Regular a pressão do ar</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>3° Encaixar o platô na plataforma giratória</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>4° Pressionais o platô para preender as laterais</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>5° Preender os parafusos que seguram o platô na plataforma</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>6° Prender as brocas das laterais</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>7° Soltar os parafusos do centro da peça</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>8° Colocar o relógio medidor e ir regulando conforme a necessidade</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>9° Colocar o papel da empresa entre um parafuso e o platô e apertar o parafuso</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>10° Tirar a pressão peso gerado pela máquina de cima do platô</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>11° Passar o lubrificante em pontos de brocas ou parafusos</li>
-                <li class="checklist-item"><i class="far fa-square check-icon"></i>12° Retirar e peça da plataforma</li>
-            </ul>
+        <div class="main-flex">
+            <div class="checklist">
+                <div class="checklist-title"><i class="fas fa-clipboard-check"></i> Checklist do procedimento</div>
+                <ul class="checklist-list" id="checklist">
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>1° Confirmar as EPIs</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>2° Regular a pressão do ar</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>3° Encaixar o platô na plataforma giratória</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>4° Pressionais o platô para preender as laterais</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>5° Preender os parafusos que seguram o platô na plataforma</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>6° Prender as brocas das laterais</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>7° Soltar os parafusos do centro da peça</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>8° Colocar o relógio medidor e ir regulando conforme a necessidade</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>9° Colocar o papel da empresa entre um parafuso e o platô e apertar o parafuso</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>10° Tirar a pressão peso gerado pela máquina de cima do platô</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>11° Passar o lubrificante em pontos de brocas ou parafusos</li>
+                    <li class="checklist-item"><i class="far fa-square check-icon"></i>12° Retirar e peça da plataforma</li>
+                </ul>
+            </div>
+            <div class="monitor-img-alerta">
+                <div class="monitor-img-container">
+                    <img src="static/Monitor.png" alt="Monitoramento" class="monitor-img">
+                </div>
+                <div class="alerta-dados">
+                    <div class="alerta-titulo"><i class="fas fa-exclamation-triangle"></i> Alerta</div>
+                    <div class="alerta-msg">
+                        Pressão fora do ideal!<br>
+                        Verifique o regulador e ajuste para 60 psi.
+                    </div>
+                    <div class="alerta-status alerta-status-critico">
+                        <i class="fas fa-bell"></i> Atenção: risco de falha no processo.
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--<a href="passos.html" class="monitor-btn" style="margin-top:24px;display:flex;align-items:center;justify-content:center;">
-            <i class="fas fa-list-ol"></i> Passo a passo
-        </a>-->
         <a href="seguranca.html" class="monitor-btn">
             <i class="fas fa-check-square"></i> Procedimentos de segurança
         </a>
@@ -234,6 +386,80 @@
             });
             doc.save('checklist_procedimento.pdf');
         });
+
+        // Regulador circular interativo
+        const regulador = document.getElementById('reguladorCircular');
+        const knob = document.getElementById('reguladorKnob');
+        const psiValue = document.getElementById('psiValue');
+        let psi = 55;
+        let isDragging = false;
+        let angle = 0;
+
+        function setKnobPosition(angle) {
+            const radius = 22; // raio do círculo para o knob
+            const centerX = 27, centerY = 27;
+            const rad = (angle - 90) * Math.PI / 180;
+            const x = centerX + radius * Math.cos(rad);
+            const y = centerY + radius * Math.sin(rad);
+            knob.style.left = x + 'px';
+            knob.style.top = y + 'px';
+            knob.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        }
+
+        function angleFromEvent(e) {
+            const rect = regulador.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left - rect.width/2;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top - rect.height/2;
+            let ang = Math.atan2(y, x) * 180 / Math.PI + 90;
+            if (ang < 0) ang += 360;
+            return Math.max(0, Math.min(ang, 270)); // Limita de 0 a 270 graus
+        }
+
+        function psiFromAngle(angle) {
+            // 0 grau = 40 psi, 270 graus = 100 psi
+            return Math.round(40 + (angle / 270) * 60);
+        }
+
+        function angleFromPsi(psi) {
+            return ((psi - 40) / 60) * 270;
+        }
+
+        function updateRegulador(angle) {
+            setKnobPosition(angle);
+            psi = psiFromAngle(angle);
+            psiValue.textContent = psi + ' psi';
+        }
+
+        regulador.addEventListener('mousedown', startDrag);
+        regulador.addEventListener('touchstart', startDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            document.body.style.userSelect = 'none';
+            moveKnob(e);
+            window.addEventListener('mousemove', moveKnob);
+            window.addEventListener('touchmove', moveKnob);
+            window.addEventListener('mouseup', stopDrag);
+            window.addEventListener('touchend', stopDrag);
+        }
+
+        function moveKnob(e) {
+            if (!isDragging) return;
+            let ang = angleFromEvent(e);
+            updateRegulador(ang);
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', moveKnob);
+            window.removeEventListener('touchmove', moveKnob);
+            window.removeEventListener('mouseup', stopDrag);
+            window.removeEventListener('touchend', stopDrag);
+        }
+
+        // Inicializa posição do knob
+        updateRegulador(angleFromPsi(psi));
     </script>
 </body>
 </html>

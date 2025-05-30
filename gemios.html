@@ -7,76 +7,102 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
 
+        :root {
+            --azul: #161414;
+            --vermelho: #851919;
+            --amarelo: #ffd600;
+            --cinza-escuro: #232323;
+            --branco: #fff;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at center, #0f0f1a 0%, #050509 100%);
-            font-family: 'Orbitron', sans-serif;
-            color: #00ffe7;
-            height: 100vh;
+            background: linear-gradient(135deg, var(--azul) 0%, var(--vermelho) 100%);
+            font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+            color: var(--branco);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
+        }
+
+        .logo-container {
+            margin-bottom: 32px;
+        }
+        .logo-container img {
+            height: 70px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(25, 118, 210, 0.25));
         }
 
         h1 {
             font-size: 2.5em;
-            text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
-            margin-bottom: 40px;
+            text-shadow: 0 0 12px var(--amarelo), 0 0 24px var(--vermelho);
+            margin-bottom: 38px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            width: 100%;
+            max-width: 340px;
         }
 
         a {
             text-decoration: none;
-            margin: 10px;
         }
 
         button {
-            background: rgba(0, 255, 231, 0.1);
-            border: 2px solid #00ffe7;
-            border-radius: 12px;
-            color: #00ffe7;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+            border: none;
+            border-radius: 16px;
+            color: var(--branco);
+            padding: 18px 0;
+            font-size: 1.18rem;
             font-weight: bold;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease-in-out;
+            width: 100%;
+            box-shadow: 0 4px 18px rgba(25,118,210,0.13);
+            transition: background 0.2s, color 0.2s, transform 0.1s;
             text-transform: uppercase;
-            box-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7 inset;
+            letter-spacing: 1px;
+            outline: none;
         }
 
-        button:hover {
-            background: #00ffe7;
-            color: #000;
-            box-shadow: 0 0 20px #00ffe7, 0 0 40px #00ffe7;
+        button:hover, button:focus {
+            background: linear-gradient(90deg, var(--amarelo) 0%, var(--azul) 100%);
+            color: var(--vermelho);
+            transform: scale(1.03);
         }
 
-        /* RESPONSIVIDADE */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
             }
-
+            .btn-group {
+                max-width: 98vw;
+            }
             button {
-                padding: 12px 30px;
+                padding: 14px 0;
                 font-size: 1rem;
             }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5em;
+                font-size: 1.3em;
             }
-
             button {
-                padding: 10px 25px;
-                font-size: 0.9rem;
+                padding: 12px 0;
+                font-size: 0.95rem;
             }
-
             body {
                 padding: 10px;
             }
@@ -84,8 +110,13 @@
     </style>
 </head>
 <body>
+    <div class="logo-container">
+        <img src="static/logo.png" alt="Logo da Empresa">
+    </div>
     <h1>Escolha a máquina para monitorar</h1>
-    <a href="monitoramento.html"><button>Regulador de platô</button></a>
-    <a href="cnc.html"><button>CNC</button></a>
+    <div class="btn-group">
+        <a href="monitoramento.html"><button>Regulador de platô</button></a>
+        <a href="cnc.html"><button>CNC</button></a>
+    </div>
 </body>
 </html>
