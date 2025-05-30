@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modelo de máquina</title>
+  <title>Regulador de platô</title>
   <style>
     body { margin: 0; overflow: hidden; background: #121212; font-family: Arial, sans-serif; }
     #3d-container { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; }
@@ -85,13 +85,20 @@
     </div>
   </div>
 
+  <!-- Overlay para liberar áudio -->
+  <div id="audio-unlock" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <button id="btnAtivarAudio" style="padding:18px 36px;font-size:1.2rem;border-radius:12px;background:#1976d2;color:#fff;border:none;font-weight:bold;box-shadow:0 4px 16px rgba(25,118,210,0.10);cursor:pointer;">
+      <i class="fas fa-volume-up"></i> Ativar som do alerta
+    </button>
+    <p style="color:#fff;margin-top:18px;">Clique para liberar o alerta sonoro</p>
+  </div>
+
   <!-- Container para o modelo 3D -->
   <div id="3d-container">
     <div class="info-container">
-      <h3>Máquina operando normalmente</h3>
-      <p>Status: <span style="color: #00E676;">Em operação</span></p>
+      <h3>Regulador do platô</h3>
       <p>Pressão do ar: <span style="color: #00E676;">55</span></p>
-      <p>Rendimento: <span style="color: #00E676;">300 unidades</span></p>
+      <p>Rendimento: <span style="color: #00E676;">20 platôs regulados</span></p>
     </div>
     <div class="info-container-right">
       <h3>Informações Técnicas</h3>
@@ -205,12 +212,19 @@
 
     // Função para emitir alerta continuamente a cada 10 segundos
     function emitirAlertaContinuo() {
-      emitirAlertaVoz('Alerta, peça mal alocada');
-      setTimeout(emitirAlertaContinuo, 10000); // 10 segundos
+      emitirAlertaVoz('Alerta, peça mal alocada, verifique se o platô está preso na castanha.');
+      setTimeout(emitirAlertaContinuo, 100);
     }
 
-    // Inicia o alerta após 3 segundos, depois repete a cada 10 segundos
-    setTimeout(emitirAlertaContinuo, 3000);
+    // Inicia o alerta após o clique do usuário
+    function iniciarAlertas() {
+      setTimeout(emitirAlertaContinuo, 3000);
+    }
+
+    document.getElementById('btnAtivarAudio').onclick = function() {
+      document.getElementById('audio-unlock').style.display = 'none';
+      iniciarAlertas();
+    };
 
   </script>
 </body>

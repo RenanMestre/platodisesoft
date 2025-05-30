@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #121212; font-family: Arial, sans-serif; }
+    #3d-container { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; }
+    #loading-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 10;
+    }
+    #loading-bar {
+      width: 80%;
+      height: 15px;
+      background-color: #444;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #loading-progress {
+      width: 0;
+      height: 100%;
+      background-color: #00E676;
+    }
+    .info-container, .info-container-right {
+      position: absolute;
+      top: 20px;
+      color: #ffffff;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      width: 200px;
+      max-width: 300px;
+    }
+    .info-container { left: 20px; }
+    .info-container-right { right: 20px; }
+
+    @media screen and (max-width: 768px) {
+      .info-container, .info-container-right {
+        font-size: 14px;
+        width: 150px;
+        max-width: 100%;
+      }
+      #loading-bar {
+        width: 90%;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <!-- Tela de Carregamento -->
+  <div id="loading-screen">
+    <div>
+      <p>Carregando Modelo 3D...</p>
+      <div id="loading-bar">
+        <div id="loading-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container para o modelo 3D -->
+  <div id="3d-container">
+    <div class="info-container">
+      <h3>Máquina com problemas!</h3>
+      <p>Status: <span style="color: #e60000;">Parada</span></p>
+      <p>Útima temperatura registrada: <span style="color: #e60000;">70°C</span></p>
+      <p>Carga de trabalho: <span style="color: #00E676;">55%</span></p>
+      <p>Rendimento: <span style="color: #00E676;">10 unidades/hora</span></p>
+    </div>
+    <div class="info-container-right">
+      <h3>Informações Técnicas</h3>
+      <p>Modelo: <span style="color: #00E676;">Centro de Usinagem</span></p>
+      <p>Fabricante: <span style="color: #00E676;">ROMI</span></p>
+      <p>Última manutenção: <span style="color: #00E676;">01/01/2025</span></p>
+      <p>Próxima manutenção: <span style="color: #e60000;">21/04/2025 não realizada</span></p>
+    </div>
+  </div>
+
+  <!-- Div para ativar o som do alerta -->
+  <div id="audio-unlock" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <button id="btnAtivarAudio" style="padding:18px 36px;font-size:1.2rem;border-radius:12px;background:#1976d2;color:#fff;border:none;font-weight:bold;box-shadow:0 4px 16px rgba(25,118,210,0.10);cursor:pointer;">
+      <i class="fas fa-volume-up"></i> Ativar som do alerta
+    </button>
+    <p style="color:#fff;margin-top:18px;">Clique para liberar o alerta sonoro</p>
+  </div>
+
+  <script>
+    // Cena, câmera e renderizador
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('3d-container').appendChild(renderer.domElement);
+
+    // Luzes
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 5, 5).normalize();
+    scene.add(directionalLight);
+
+    // Controles de câmera
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+
+    // Variáveis globais
+    let loadedObject = null;
+    let problema = null;
+    let problema2 = null; // Corrigido: declarar problema2
+    let pulseTime = 0;
+
+    // Loader
+    const loader = new THREE.OBJLoader();
+    loader.load('base_2.obj',
+      function (object) {
+        if (loadedObject) scene.remove(loadedObject);
+
+        object.scale.set(1, 1, 1);
+        object.position.set(0, -1, 0);
+
+        // Criar marcador de problema (vermelho pulsante)
+        const problemaGeometry = new THREE.SphereGeometry(0.15, 32, 32);
+        const problemaMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        problema = new THREE.Mesh(problemaGeometry, problemaMaterial);
+        problema2 = new THREE.Mesh(problemaGeometry, problemaMaterial);
+
+        problema.position.set(0.2, 1.0, 0.1);
+        object.add(problema);
+
+        problema2.position.set(-0.2, 1.0, 0.1);
+        object.add(problema2);
+
+        scene.add(object);
+        loadedObject = object;
+
+        document.getElementById('loading-screen').style.display = 'none';
+      },
+      function (xhr) {
+        const progress = (xhr.loaded / xhr.total) * 100;
+        document.getElementById('loading-progress').style.width = progress + '%';
+      },
+      function (error) {
+        console.error('Erro ao carregar o modelo:', error);
+      }
+    );
+
+    camera.position.set(0, 1, 5);
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Animação
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (loadedObject) loadedObject.rotation.y += 0.01;
+
+      // Efeito pulsante suave usando seno
+      pulseTime += 0.05;
+      const scale = 1 + 0.2 * Math.sin(pulseTime);
+
+      if (problema) {
+        problema.scale.set(scale, scale, scale);
+      }
+      if (problema2) {
+        problema2.scale.set(scale, scale, scale);
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Função para emitir alerta sonoro com voz
+    function emitirAlertaVoz(mensagem) {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(mensagem);
+        utter.lang = 'pt-BR';
+        window.speechSynthesis.speak(utter);
+      } else {
+        alert(mensagem); // Fallback caso o navegador não suporte
+      }
+    }
+
+    // Função para emitir alerta continuamente a cada 10 segundos
+    function emitirAlertaContinuo() {
+      emitirAlertaVoz('Alerta, problema na regulagem da broca. CNC parado! Por favor, verifique a máquina imediatamente.');
+      setTimeout(emitirAlertaContinuo, 10000); // 10 segundos
+    }
+
+    function iniciarAlertas() {
+      setTimeout(emitirAlertaContinuo, 3000);
+    }
+
+    document.getElementById('btnAtivarAudio').onclick = function() {
+      document.getElementById('audio-unlock').style.display = 'none';
+      iniciarAlertas();
+    };
+
+    // Ativar/desativar áudio
+    let audioAtivo = false;
+    const btnAtivarAudio = document.getElementById('btnAtivarAudio');
+    const audioUnlockDiv = document.getElementById('audio-unlock');
+
+    btnAtivarAudio.addEventListener('click', () => {
+      audioAtivo = !audioAtivo;
+      if (audioAtivo) {
+        audioUnlockDiv.style.display = 'none';
+        emitirAlertaContinuo(); // Inicia os alertas sonoros contínuos
+      } else {
+        audioUnlockDiv.style.display = 'flex';
+        window.speechSynthesis.cancel(); // Para os alertas sonoros
+      }
+    });
+  </script>
+</body>
+</html>
