@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Mensagem do Criador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1976d2 0%, #414345 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 36px 24px 28px 24px;
+            max-width: 420px;
+            width: 96vw;
+            text-align: center;
+        }
+        h1 {
+            color: #1976d2;
+            font-size: 1.7rem;
+            margin-bottom: 18px;
+        }
+        .msg {
+            color: #333;
+            font-size: 1.08rem;
+            margin-bottom: 28px;
+        }
+        .question {
+            font-weight: bold;
+            color: #d21919;
+            margin-bottom: 24px;
+            font-size: 1.15rem;
+        }
+        .btns {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 18px;
+            position: relative;
+        }
+        .msg-btn {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 22px;
+            padding: 12px 28px;
+            font-size: 1.08rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(25,118,210,0.10);
+            transition: background 0.2s, transform 0.1s;
+            outline: none;
+            position: relative;
+        }
+        .msg-btn:hover, .msg-btn:focus {
+            background: #1251a3;
+            transform: scale(1.04);
+        }
+        #naoBtn {
+            background: #d21919;
+        }
+        #naoBtn:hover, #naoBtn:focus {
+            background: #a31212;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 2vw 18px 2vw;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            .msg-btn {
+                padding: 10px 12px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-envelope-open-text"></i> Mensagem do Criador</h1>
+        <div class="msg">
+            Este sistema foi desenvolvido para transformar a rotina da sua empresa, trazendo mais segurança, produtividade e inovação ao ambiente industrial.<br><br>
+            Com ele, qualquer colaborador pode seguir procedimentos claros, monitorar processos e garantir a qualidade do serviço, mesmo sem experiência prévia.<br><br>
+            Acreditamos que investir em tecnologia e conhecimento é o caminho para o sucesso sustentável.<br>
+        </div>
+        <div class="question">
+            E aí, vocês irão deixar esse manual passar?
+        </div>
+        <div class="btns">
+            <button class="msg-btn" id="simBtn"><i class="fas fa-thumbs-up"></i> Sim, investirei</button>
+            <button class="msg-btn" id="naoBtn"><i class="fas fa-thumbs-down"></i> Não investirei</button>
+        </div>
+    </div>
+    <script>
+        // Botão "Sim"
+        document.getElementById('simBtn').onclick = function() {
+            alert("Certamente a empresa não se arrependerá da escolha!");
+        };
+
+        // Botão "Não" foge do mouse/toque
+        const naoBtn = document.getElementById('naoBtn');
+        const btnsDiv = document.querySelector('.btns');
+        let positions = [
+            {left: '0%', top: '0%'},
+            {left: '60%', top: '0%'},
+            {left: '0%', top: '60%'},
+            {left: '60%', top: '60%'},
+            {left: '30%', top: '30%'}
+        ];
+        let idx = 0;
+
+        function moveNaoBtn() {
+            naoBtn.style.position = 'absolute';
+            const pos = positions[idx % positions.length];
+            naoBtn.style.left = pos.left;
+            naoBtn.style.top = pos.top;
+            idx++;
+        }
+
+        naoBtn.addEventListener('mouseenter', moveNaoBtn);
+        naoBtn.addEventListener('touchstart', function(e) {
+            moveNaoBtn();
+            e.preventDefault();
+        });
+
+        // Para garantir que o botão volte ao lugar se a tela for redimensionada
+        window.addEventListener('resize', function() {
+            naoBtn.style.left = '';
+            naoBtn.style.top = '';
+            naoBtn.style.position = 'relative';
+            idx = 0;
+        });
+    </script>
+</body>
+</html>

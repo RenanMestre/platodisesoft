@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créditos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #28721e, #0c0b13);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff22;
+        }
+
+        .credit-list {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .credit-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .credit-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .role {
+            font-style: italic;
+            color: #cceeff;
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Créditos - Green Team</h1>
+        <p>Esse sistema foi desenvolvido como um manual para a empresa Platodiesel afim de concretizarem suas ações futuras, e aí, vai deixar esse manual passar? <br>Parabéns a essa equipe espetacular! <br>Composta por:</p>
+
+        <div class="credit-list">
+            <div class="credit-item">
+                <strong>Rafael</strong>
+                <span class="role">Coleta de dados, organizador de soluções e pesquisador.</span>
+            </div>
+            <div class="credit-item">
+                <strong>Renan</strong>
+                <span class="role">Desenvolvedor do site, analista de dados e contribuidor com ideias inovadoras e tecnológicas visando econômia circular.</span>
+            </div>
+            <div class="credit-item">
+                <strong>Stephany</strong>
+                <span class="role">Criadora do protótipo e contribuidora de ideias.</span>
+            </div>
+            <div class="credit-item">
+                <strong>Beatriz</strong>
+                <span class="role">Assitente de criadora de protótipo e pesquisadora.</span>
+            </div>
+            <div class="credit-item">
+                <strong>Melyssa</strong>
+                <span class="role">Levantamento de dados estatísticos e benefícios para a empresa e criadora de imagens</span>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2025 - Green Team "Prevenir é crescer".
+        </footer>
+    </div>
+</body>
+</html>
